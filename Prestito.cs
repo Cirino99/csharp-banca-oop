@@ -10,6 +10,7 @@ public class Prestito
     public int ValoreRata { get; set; }
     public DateOnly Inizio { get; set; }
     public DateOnly Fine { get; set; }
+    public static int UltimoId { get; set; }
     public Prestito(int id, Cliente intestatario, int ammontare, int valoreRata, DateOnly inizio, DateOnly fine)
     {
         Id = id;
@@ -18,6 +19,7 @@ public class Prestito
         ValoreRata = valoreRata;
         Inizio = inizio;
         Fine = fine;
+        UltimoId++;
     }
     public int RateRimanenti()
     {
