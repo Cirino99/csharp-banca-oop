@@ -7,12 +7,14 @@ public class Cliente
     public string Cognome { get; set; }
     public string CodiceFiscale { get; set; }
     public int Stipendio { get; set; }
+    public static int NumeroClienti { get; set; }
     public Cliente(string nome, string cognome, string codiceFiscale, int stipendio)
     {
         Nome = nome;
         Cognome = cognome;
         CodiceFiscale = codiceFiscale;
         Stipendio = stipendio;
+        NumeroClienti++;
     }
     public void StampaCliente()
     {

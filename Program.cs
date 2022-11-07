@@ -5,6 +5,7 @@ Banca banca = new Banca("N26");
 bool exit = false;
 do
 {
+    Console.WriteLine("Banca {0} con {1} clienti", banca.Nome, Cliente.NumeroClienti);
     Console.WriteLine("1) Crea nuovo utente");
     Console.WriteLine("2) Cerca cliente");
     Console.WriteLine("3) Modifica cliente");
