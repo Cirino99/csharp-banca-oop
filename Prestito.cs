@@ -19,4 +19,15 @@ public class Prestito
         Inizio = inizio;
         Fine = fine;
     }
+    public int RateRimanenti()
+    {
+        DateTime oggi = DateOnly.FromDateTime(DateTime.Now).ToDateTime(TimeOnly.Parse("10:00 PM"));
+        DateTime fine = Fine.ToDateTime(TimeOnly.Parse("10:00 PM"));
+        int rateRimanenti = fine.Subtract(oggi).Days / 30;
+        return rateRimanenti;
+    }
+    public void StampaPrestito()
+    {
+        Console.WriteLine("Prestito di {0}$ da {1}$ a rata", Ammontare, ValoreRata);
+    }
 }

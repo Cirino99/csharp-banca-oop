@@ -14,4 +14,11 @@ public class Cliente
         CodiceFiscale = codiceFiscale;
         Stipendio = stipendio;
     }
+    public void StampaCliente()
+    {
+        Console.WriteLine("Nome: " + Nome);
+        Console.WriteLine("Cognome: " + Cognome);
+        Console.WriteLine("Codice Fiscale: " + CodiceFiscale);
+        Console.WriteLine("Stipendio: " + Stipendio + "€");
+    }
 }

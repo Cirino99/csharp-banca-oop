@@ -48,7 +48,7 @@ public class Banca
             cliente.Nome = clienteModificato.Nome;
         if (clienteModificato.Cognome != "")
             cliente.Cognome = clienteModificato.Cognome;
-        if (clienteModificato.Stipendio > 0)
+        if (clienteModificato.Stipendio >= 0)
             cliente.Stipendio = clienteModificato.Stipendio;
         return true;
     }
@@ -88,18 +88,15 @@ public class Banca
         }
         return ammontareTotale;
     }
-    public List<int> RateRimanentiPrestitiCliente(string codiceFiscale)
+    public List<Prestito> RateRimanentiPrestitiCliente(string codiceFiscale)
     {
-        List<int> totaleRate = new List<int>();
+        List<Prestito> prestitiAttivi = new List<Prestito>();
         List<Prestito> prestitiCliente = RicercaPrestitiCliente(codiceFiscale);
-        DateTime oggi = DateOnly.FromDateTime(DateTime.Now).ToDateTime(TimeOnly.Parse("10:00 PM"));
         foreach (Prestito prestito in prestitiCliente)
         {
-            DateTime fine = prestito.Fine.ToDateTime(TimeOnly.Parse("10:00 PM"));
-            int rateRimanenti = fine.Subtract(oggi).Days / 30;
-            if (rateRimanenti > 0)
-                totaleRate.Add(rateRimanenti);
+            if (prestito.RateRimanenti() > 0)
+                prestitiAttivi.Add(prestito);
         }
-        return totaleRate;
+        return prestitiAttivi;
     }
 }
