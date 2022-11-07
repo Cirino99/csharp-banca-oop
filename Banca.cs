@@ -1,6 +1,8 @@
 ﻿
 // See https://aka.ms/new-console-template for more information
 
+using System.Globalization;
+
 public class Banca
 {
     public string Nome { get; private set; }
@@ -48,5 +50,41 @@ public class Banca
         if (clienteModificato.Stipendio > 0)
             cliente.Stipendio = clienteModificato.Stipendio;
         return true;
+    }
+    public bool NuovoPrestito(string codiceFiscale, int ammontare, DateOnly inizio, DateOnly fine)
+    {
+        Cliente cliente = CercaCliente(codiceFiscale);
+        if (cliente == null)
+            return false;
+        DateTime datamod = inizio.ToDateTime(TimeOnly.Parse("10:00 PM"));
+        DateTime datamod2 = fine.ToDateTime(TimeOnly.Parse("10:00 PM"));
+        if (cliente.Stipendio / 2 < ammontare / (datamod2.Subtract(datamod).Days / 30))
+            return false;
+        Prestito prestito = new Prestito(1,cliente,ammontare,ammontare/24,inizio,fine);
+        Prestiti.Add(prestito);
+        return true;
+    }
+    public List<Prestito> RicercaPrestitiCliente(string codiceFiscale)
+    {
+        Cliente cliente = CercaCliente(codiceFiscale);
+        if (cliente == null)
+            return null;
+        List<Prestito> prestitiCliente = new List<Prestito>();
+        foreach (Prestito prestito in Prestiti)
+        {
+            if (prestito.Intestatario.CodiceFiscale == cliente.CodiceFiscale)
+                prestitiCliente.Add(prestito);
+        }
+        return prestitiCliente;
+    }
+    public int AmmontareTotalePrestitiCliente(string codiceFiscale)
+    {
+        List<Prestito> prestitiCliente = RicercaPrestitiCliente(codiceFiscale);
+        int ammontareTotale = 0;
+        foreach (Prestito prestito in prestitiCliente)
+        {
+            ammontareTotale += prestito.Ammontare;
+        }
+        return ammontareTotale;
     }
 }
