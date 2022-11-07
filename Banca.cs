@@ -2,6 +2,7 @@
 // See https://aka.ms/new-console-template for more information
 
 using System.Globalization;
+using System.IO;
 
 public class Banca
 {
@@ -56,9 +57,9 @@ public class Banca
         Cliente cliente = CercaCliente(codiceFiscale);
         if (cliente == null)
             return false;
-        DateTime datamod = inizio.ToDateTime(TimeOnly.Parse("10:00 PM"));
-        DateTime datamod2 = fine.ToDateTime(TimeOnly.Parse("10:00 PM"));
-        if (cliente.Stipendio / 2 < ammontare / (datamod2.Subtract(datamod).Days / 30))
+        DateTime inizioMod = inizio.ToDateTime(TimeOnly.Parse("10:00 PM"));
+        DateTime fineMod = fine.ToDateTime(TimeOnly.Parse("10:00 PM"));
+        if (cliente.Stipendio / 2 < ammontare / (fineMod.Subtract(inizioMod).Days / 30))
             return false;
         Prestito prestito = new Prestito(1,cliente,ammontare,ammontare/24,inizio,fine);
         Prestiti.Add(prestito);
@@ -86,5 +87,19 @@ public class Banca
             ammontareTotale += prestito.Ammontare;
         }
         return ammontareTotale;
+    }
+    public List<int> RateRimanentiPrestitiCliente(string codiceFiscale)
+    {
+        List<int> totaleRate = new List<int>();
+        List<Prestito> prestitiCliente = RicercaPrestitiCliente(codiceFiscale);
+        DateTime oggi = DateOnly.FromDateTime(DateTime.Now).ToDateTime(TimeOnly.Parse("10:00 PM"));
+        foreach (Prestito prestito in prestitiCliente)
+        {
+            DateTime fine = prestito.Fine.ToDateTime(TimeOnly.Parse("10:00 PM"));
+            int rateRimanenti = fine.Subtract(oggi).Days / 30;
+            if (rateRimanenti > 0)
+                totaleRate.Add(rateRimanenti);
+        }
+        return totaleRate;
     }
 }

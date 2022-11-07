@@ -23,3 +23,9 @@ foreach (Prestito prestito in prestiti)
     Console.WriteLine("Prestito di {0} da {1} a rata",prestito.Ammontare,prestito.ValoreRata);
 }
 Console.WriteLine("Ammontare totale dei prestiti concessi: " + banca.AmmontareTotalePrestitiCliente("CRNSMN"));
+List<int> ratePagare = banca.RateRimanentiPrestitiCliente("CRNSMN");
+Console.WriteLine("Hai " + ratePagare.Count + " prestiti da pagare");
+foreach (int rate in ratePagare)
+{
+    Console.WriteLine("rate rimanenti: " + rate);
+}
