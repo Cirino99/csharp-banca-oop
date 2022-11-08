@@ -46,6 +46,8 @@ do
             break;
         case 3:
             Console.WriteLine();
+            Console.WriteLine("Inserisci il codice fiscale dell'utente da modificare");
+            string codiceFiscale3Vecchio = Console.ReadLine();
             Console.WriteLine("Inserisci i campi che vuoi modificare, altrimenti lascia vuoto");
             Console.WriteLine("Nome");
             string nome3 = Console.ReadLine();
@@ -56,7 +58,7 @@ do
             Console.WriteLine("Stipendio, per lasciarlo invariato digita -1");
             int stipendio3 = Convert.ToInt32(Console.ReadLine());
             Cliente clienteModificato = new Cliente(nome3, cognome3, codiceFiscale3, stipendio3);
-            bool successo3 = banca.ModificaCliente(clienteModificato);
+            bool successo3 = banca.ModificaCliente(clienteModificato, codiceFiscale3Vecchio);
             if (successo3)
                 Console.WriteLine("Cliente modificato correttamente");
             else

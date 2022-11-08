@@ -17,6 +17,8 @@ public class Banca
     }
     public Cliente CercaCliente(string codiceFiscale)
     {
+        if (codiceFiscale == null || codiceFiscale == "")
+            return null;
         foreach (Cliente cliente in Clienti)
         {
             if(cliente.CodiceFiscale == codiceFiscale)
@@ -39,15 +41,17 @@ public class Banca
         Clienti.Add(cliente);
         return true;
     }
-    public bool ModificaCliente(Cliente clienteModificato)
+    public bool ModificaCliente(Cliente clienteModificato, string codiceFiscale)
     {
-        Cliente cliente = CercaCliente(clienteModificato.CodiceFiscale);
+        Cliente cliente = CercaCliente(codiceFiscale);
         if (cliente == null)
             return false;
-        if(clienteModificato.Nome != "")
+        if(clienteModificato.Nome != "" && clienteModificato.Nome != null)
             cliente.Nome = clienteModificato.Nome;
-        if (clienteModificato.Cognome != "")
+        if (clienteModificato.Cognome != "" && clienteModificato.Cognome != null)
             cliente.Cognome = clienteModificato.Cognome;
+        if (clienteModificato.CodiceFiscale != "" && clienteModificato.CodiceFiscale != null)
+            cliente.CodiceFiscale = clienteModificato.CodiceFiscale;
         if (clienteModificato.Stipendio >= 0)
             cliente.Stipendio = clienteModificato.Stipendio;
         return true;
