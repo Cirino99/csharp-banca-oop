@@ -63,9 +63,10 @@ public class Banca
             return false;
         DateTime inizioMod = inizio.ToDateTime(TimeOnly.Parse("10:00 PM"));
         DateTime fineMod = fine.ToDateTime(TimeOnly.Parse("10:00 PM"));
-        if (cliente.Stipendio / 2 < ammontare / (fineMod.Subtract(inizioMod).Days / 30))
+        int valoreRata = ammontare / (fineMod.Subtract(inizioMod).Days / 30);
+        if (cliente.Stipendio / 2 < valoreRata)
             return false;
-        Prestito prestito = new Prestito(Prestito.UltimoId,cliente,ammontare,ammontare/24,inizio,fine);
+        Prestito prestito = new Prestito(Prestito.UltimoId,cliente,ammontare, valoreRata, inizio,fine);
         Prestiti.Add(prestito);
         return true;
     }
